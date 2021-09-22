@@ -2,7 +2,8 @@
 
 This is a MiniJava-to-LLVM compiler project, written in Java (with the help of JFlex, JavaCUP and JTB), introduced
 as an assignment for the [compilers](http://cgi.di.uoa.gr/~compilers) course (NKUA). The compiler checks a MiniJava
-program to determine whether it's semantically correct, in which case it compiles it to LLVM IR code.
+program to determine whether it's semantically correct, in which case it compiles it to LLVM IR code. More details
+about the assignment can be found [here](http://cgi.di.uoa.gr/~compilers/project.html#hw2) (homework 2 & 3).
 
 
 ## Compilation & Execution
