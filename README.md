@@ -8,8 +8,6 @@ about the assignment can be found [here](http://cgi.di.uoa.gr/~compilers/project
 
 ## Compilation & Execution
 
-- The .jar files have been omitted & they need to be placed under the jars/ dir.
-
 - Type in "make" to generate and compile all necessary files.
 
 - Execute the compiler as: java Main file1 [file2 [file3 ...]].
