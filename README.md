@@ -83,8 +83,7 @@ Some key points about the code generation visitor:
 
 - Virtual registers are represented as %_<number> (<number> is incremented by 1 each time).
 
-- Local variables of type i32 and i1 are explicitly initialized to zero upon declaration
-  (following the discussion made under the piazza followup post @131_f1).
+- Local variables of type i32 and i1 are explicitly initialized to zero upon declaration.
 
 - For almost all visit methods (except those corresponding to Type()), the idea is that we
   want to return both the LLVM IR type & the corresponding high level type name. The latter
