@@ -3,7 +3,9 @@
 This is a MiniJava-to-LLVM compiler project, written in Java (with the help of JFlex, JavaCUP and JTB), introduced
 as an assignment for the [compilers](http://cgi.di.uoa.gr/~compilers) course (NKUA). The compiler checks a MiniJava
 program to determine whether it's semantically correct, in which case it compiles it to LLVM IR code. More details
-about the assignment can be found [here](http://cgi.di.uoa.gr/~compilers/project.html#hw2) (homework 2 & 3).
+about the assignment can be found [here](http://cgi.di.uoa.gr/~compilers/project.html#hw2) (homework 2 & 3). Many
+thanks to [Stefanos Baziotis](https://github.com/baziotis) for his [MiniJava testsuite](https://github.com/baziotis/minijava-testsuite)
+contribution!
 
 
 ## Compilation & Execution
@@ -92,4 +94,3 @@ Some key points about the code generation visitor:
   we only want to use the LLVM IR representation of that same type. Both of these types are
   stored in a single string (the .type field in the VarInfo), and are seperated by a colon,
   so calls to split(":") are needed to fetch the correct one each time (a bit hacky, but ok).
-
