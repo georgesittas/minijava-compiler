@@ -69,7 +69,7 @@ These are:
 The first two visitors keep the symbol table associated with the input program as a private
 field. The argument "argu" in each overriden visit method is used to propagate information
 about scope to nodes that are deeper in the visited AST. The scope itself is represented as
-a string that follows the format <ClassIdentifier> [":" [<MethodIdentifier>]].
+a string that follows the format ClassIdentifier [":" [MethodIdentifier] ].
 
 The MainClass symbol and its main method are not handled separately. The main method's
 argument is stored in the symbol table with type "String[]", so, if it appears in any
