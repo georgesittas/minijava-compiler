@@ -83,7 +83,7 @@ in a more "organized" way (less string hacks), whenever that's needed.
 
 Some key points about the code generation visitor:
 
-- Virtual registers are represented as %_<number> (<number> is incremented by 1 each time).
+- Virtual registers are represented as %\_number (number is incremented by 1 each time).
 
 - Local variables of type i32 and i1 are explicitly initialized to zero upon declaration.
 
