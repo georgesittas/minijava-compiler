@@ -1,22 +1,21 @@
 # Minijava Compiler
 
-This is a MiniJava-to-LLVM-IR compiler project, written in Java (with the help of JFlex, JavaCUP and JTB), introduced
-as an assignment for the [compilers](http://cgi.di.uoa.gr/~compilers) course (NKUA). The compiler checks a MiniJava
-program to determine whether it's semantically correct, in which case it compiles it to LLVM IR code. More details
-about the assignment can be found [here](https://cgi.di.uoa.gr/~compilers/20_21/project.html#hw2) (homework 2 & 3). Many
-thanks to [Stefanos Baziotis](https://github.com/baziotis) for his [MiniJava testsuite](https://github.com/baziotis/minijava-testsuite)
+This is a MiniJava-to-LLVM-IR compiler project, written in Java (with the help of JFlex, JavaCUP and JTB), originally
+introduced as an assignment for the [compilers](http://cgi.di.uoa.gr/~compilers) course (NKUA). Details about the project
+can be found [here](https://cgi.di.uoa.gr/~compilers/20_21/project.html#hw2) (sections homework 2 & 3). I thank
+[Stefanos Baziotis](https://github.com/baziotis) for his [MiniJava testsuite](https://github.com/baziotis/minijava-testsuite)
 contribution!
 
 
-## Compilation & Execution
+## How to Use
 
-- Type in "make" to generate and compile all necessary files.
+- Generate and compile all necessary files: `make`.
 
-- Execute the compiler as: java Main file1 [file2 [file3 ...]].
+- Execute the compiler: `java Main file1 [file2 [file3 ...]]`.
 
-- Type in "make clean" to clean the directory of all class files (recursively).
+- Clean the directory of all class files (recursively: `make clean`.
 
-- Type in "make clean_all" to clean the directory of all *generated* files.
+- Clean the directory of all *generated* files: `make clean_all`.
 
 
 ## Symbol Table
