@@ -3,7 +3,7 @@
 This is a MiniJava-to-LLVM-IR compiler project, written in Java (with the help of JFlex, JavaCUP and JTB), introduced
 as an assignment for the [compilers](http://cgi.di.uoa.gr/~compilers) course (NKUA). The compiler checks a MiniJava
 program to determine whether it's semantically correct, in which case it compiles it to LLVM IR code. More details
-about the assignment can be found [here](http://cgi.di.uoa.gr/~compilers/project.html#hw2) (homework 2 & 3). Many
+about the assignment can be found [here](https://cgi.di.uoa.gr/~compilers/20_21/project.html#hw2) (homework 2 & 3). Many
 thanks to [Stefanos Baziotis](https://github.com/baziotis) for his [MiniJava testsuite](https://github.com/baziotis/minijava-testsuite)
 contribution!
 
