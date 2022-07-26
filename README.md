@@ -21,61 +21,60 @@ contribution!
 
 ## Symbol Table
 
-A simple approach has been chosen for the implementation of the symbol table, due to the fact
-that MiniJava is a fairly simple language, when it comes to scopes: all declarations precede
-statements. This property prevents having declarations in nested compound statements, such as
-if-else, while and block statements. Namely, the symbol_table package contains the classes:
+The symbol table has been modelled in a simple way, due to the fact that MiniJava is a fairly
+simple language when it comes to scopes: all declarations precede statements. This property
+prevents declarations from showing up in nested compound statements, such as if-else, while
+and block statements. The classes contained in the symbol_table package are:
 
-- SymbolTable, which keeps track of class declarations & maintains inheritance-related info.
+- SymbolTable: keeps track of class declarations & maintains inheritance-related info.
 
-- ClassInfo, which contains class-scope info, such as field and method declarations and their
+- ClassInfo: contains class-scope info, such as field and method declarations and their
   offsets.
 
-- MethodInfo, which contains method-scope info, such as formal parameter & local variable
+- MethodInfo: contains method-scope info, such as formal parameter & local variable
   declarations.
 
-- VarInfo, which is a wrapper for a variable/argument's identifier and type.
+- VarInfo: wrapper for a variable/argument's identifier and type.
 
-Note that some static checking is handled by the symbol table logic itself. One such example
-is when someone tries to declare a class A which inherits from a class B, that hasn't been
+Note that some semantic checks are incorporated in the symbol table logic. One such example
+is when someone tries to declare a class A which inherits from a class B, which hasn't been
 declared previously. This error will be caught in the addClass method, and an exception will
-be thrown. Generally: errors are handled by throwing exceptions whenever needed.
+be thrown. Generally, errors are handled by throwing exceptions whenever needed.
 
 
 ## Virtual Method Table
 
 The vtable package contains the classes:
 
-- VTable : keeps track of a class' methods & their "owners" (eg. A::foo or B::foo), depending on
-  the overriding that's happened (which can be determined statically). A list has been used, so
-  that the correct method order is attained for emitting the vtable info in LLVM IR later on.
+- VTable: keeps track of a class' methods & their "owners" (eg. A::foo or B::foo), depending on
+  the overriding that's happened (which can be determined statically). A list has been used, in
+  order to maintain the method order and later emit the correct vtable info in LLVM IR.
 
-- VTInfo : wrapper around the method binding info (see above).
+- VTInfo: wrapper around the method binding info (see above).
 
 
 ## Visitors
 
-Four visitors have been created in order to do the static semantic checking & code generation.
-These are:
+There are four visitors, that are used to implement the semantic checks and the code generation:
 
-- STVisitor, that's used to fill in the symbol table with symbol declaration info.
+- STVisitor: populates the symbol table.
 
-- SCVisitor, that's used to do the type checking etc on the input programs.
+- SCVisitor: does type checking and other static checks.
 
-- VTVisitor, that's used to fill in the virtual table appropriately.
+- VTVisitor: populates the virtual table.
 
-- CGVisitor, that's used to translate the input programs to LLVM IR.
+- CGVisitor: generates the resulting LLVM IR code.
 
-The first two visitors keep the symbol table associated with the input program as a private
+The first two visitors maintain the symbol table associated with the input program as a private
 field. The argument "argu" in each overriden visit method is used to propagate information
 about scope to nodes that are deeper in the visited AST. The scope itself is represented as
 a string that follows the format ClassID [":" [MethodID]].
 
 The MainClass symbol and its main method are not handled separately. The main method's
 argument is stored in the symbol table with type "String[]", so, if it appears in any
-expression in the program, a type error will be triggered.
+expression in the program, a type error will be triggered inevitably.
 
-The last two visitors keep both the symbol and the virtual method tables associated with the
+The last two visitors maintain both the symbol and the virtual method tables associated with the
 input program as private fields. The VTVisitor argu/return value types play the same role as
 in the STVisitor, while the CGVisitor return value type has been changed to VarInfo, in order
 to propagate virtual register names & their types (both in LLVM IR & in high level) upwards,
