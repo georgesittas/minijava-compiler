@@ -1,7 +1,7 @@
 # Minijava Compiler
 
 This is a MiniJava-to-LLVM-IR compiler project, written in Java (with the help of JFlex, JavaCUP and JTB), originally
-introduced as an assignment for the [compilers](http://cgi.di.uoa.gr/~compilers) course (NKUA). Details about the project
+introduced as an assignment for the [compilers](http://cgi.di.uoa.gr/~compilers) course (UoA). Details about the project
 can be found [here](https://cgi.di.uoa.gr/~compilers/20_21/project.html#hw2) (sections homework 2 & 3). I thank
 [Stefanos Baziotis](https://github.com/baziotis) for his [MiniJava testsuite](https://github.com/baziotis/minijava-testsuite)
 contribution!
