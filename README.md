@@ -1,4 +1,4 @@
-# Minijava Compiler
+# MiniJava Compiler
 
 This is a MiniJava-to-LLVM-IR compiler project, written in Java (with the help of JFlex, JavaCUP and JTB), originally
 introduced as an assignment for the [compilers](http://cgi.di.uoa.gr/~compilers) course (UoA). Details about the project
