@@ -1,94 +1,55 @@
 # MiniJava Compiler
 
-This is a MiniJava-to-LLVM-IR compiler project, written in Java (with the help of JFlex, JavaCUP and JTB), originally
-introduced as an assignment for the [compilers](http://cgi.di.uoa.gr/~compilers) course (UoA). Details about the project
-can be found [here](https://cgi.di.uoa.gr/~compilers/20_21/project.html#hw2) (sections homework 2 & 3). I thank
-[Stefanos Baziotis](https://github.com/baziotis) for his [MiniJava testsuite](https://github.com/baziotis/minijava-testsuite)
-contribution!
+This is a MiniJava-to-LLVM-IR compiler project, written in Java with the help of JFlex, JavaCUP and JTB. Details about the
+project can be found [here](https://cgi.di.uoa.gr/~compilers/20_21/project.html#hw2) (sections homework 2 & 3). I thank
+[Stefanos Baziotis](https://github.com/baziotis) for contributing his [MiniJava testsuite](https://github.com/baziotis/minijava-testsuite)!
 
 
-## How to Use
+## Usage
 
-- Generate and compile all necessary files: `make`.
+```bash
+# Compile the project
+make
 
-- Execute the compiler: `java Main file1 [file2 [file3 ...]]`.
+# Run the compiler
+java Main file1 [file2 [file3 ...]]
 
-- Clean the directory of all class files (recursively: `make clean`.
+# Cleanup
+make clean
+```
 
-- Clean the directory of all *generated* files: `make clean_all`.
+## Implementation
 
+### Scoping & Symbol Table
 
-## Symbol Table
+MiniJava is a simple language when it comes to scoping: all declarations precede statements.
+This property prevents declarations from showing up in nested compound statements such as
+if-else, while and block statements. Thus, the symbol table need only keep track of class
+declarations, class-scope declarations (i.e. fields and methods) and method-scope declarations
+(i.e. parameter and local variables).
 
-The symbol table has been modelled in a simple way, due to the fact that MiniJava is a fairly
-simple language when it comes to scopes: all declarations precede statements. This property
-prevents declarations from showing up in nested compound statements, such as if-else, while
-and block statements. The classes contained in the symbol_table package are:
+### Compilation Phases
 
-- SymbolTable: keeps track of class declarations & maintains inheritance-related info.
+We start by producing an AST for the source program with the help of JFlex, JavaCUP and JTB. Then,
+we check its semantics & finally generate the LLVM-IR code with the help of the following visitor
+classes:
 
-- ClassInfo: contains class-scope info, such as field and method declarations and their
-  offsets.
+1. `STVisitor` populates the symbol table
 
-- MethodInfo: contains method-scope info, such as formal parameter & local variable
-  declarations.
+2. `SCVisitor` type checks the program
 
-- VarInfo: wrapper for a variable/argument's identifier and type.
+3. `VTVisitor` populates the virtual method table
 
-Note that some semantic checks are incorporated in the symbol table logic. One such example
-is when someone tries to declare a class A which inherits from a class B, which hasn't been
-declared previously. This error will be caught in the addClass method, and an exception will
-be thrown. Generally, errors are handled by throwing exceptions whenever needed.
+4. `CGVisitor` generates the resulting LLVM IR code
 
+### Notes
 
-## Virtual Method Table
+- The `MainClass` class and its `main` method are not handled as special cases. The method's
+argument is stored in the symbol table with type `String[]`, so, if it appears in any
+expression in the program, a type error will be triggered by `SCVisitor` inevitably.
 
-The vtable package contains the classes:
+- Scopes are implemented by constructing strings of the form `ClassID [":" [MethodID]]` and passing
+them as arguments to children nodes as the visitors are walking the AST. 
 
-- VTable: keeps track of a class' methods & their "owners" (eg. A::foo or B::foo), depending on
-  the overriding that's happened (which can be determined statically). A list has been used, in
-  order to maintain the method order and later emit the correct vtable info in LLVM IR.
-
-- VTInfo: wrapper around the method binding info (see above).
-
-
-## Visitors
-
-There are four visitors, that are used to implement the semantic checks and the code generation:
-
-- STVisitor: populates the symbol table.
-
-- SCVisitor: does type checking and other static checks.
-
-- VTVisitor: populates the virtual table.
-
-- CGVisitor: generates the resulting LLVM IR code.
-
-The first two visitors maintain the symbol table associated with the input program as a private
-field. The argument "argu" in each overriden visit method is used to propagate information
-about scope to nodes that are deeper in the visited AST. The scope itself is represented as
-a string that follows the format ClassID [":" [MethodID]].
-
-The MainClass symbol and its main method are not handled separately. The main method's
-argument is stored in the symbol table with type "String[]", so, if it appears in any
-expression in the program, a type error will be triggered inevitably.
-
-The last two visitors maintain both the symbol and the virtual method tables associated with the
-input program as private fields. The VTVisitor argu/return value types play the same role as
-in the STVisitor, while the CGVisitor return value type has been changed to VarInfo, in order
-to propagate virtual register names & their types (both in LLVM IR & in high level) upwards,
-in a more "organized" way (less string hacks), whenever that's needed.
-
-Some key points about the code generation visitor:
-
-- Virtual registers are represented as %\_number (number is incremented by 1 each time).
-
-- Local variables of type i32 and i1 are explicitly initialized to zero upon declaration.
-
-- For almost all visit methods (except those corresponding to Type()), the idea is that we
-  want to return both the LLVM IR type & the corresponding high level type name. The latter
-  is needed in cases such as MessageSend, so that we'll be able to use the object's type to
-  find method offset info from the symbol table. The former is simply helpful for cases where
-  we only want to use the LLVM IR representation of that same type. Both of these types are
-  stored in a single string (the .type field in the VarInfo), and are seperated by a colon,
-  so calls to split(":") are needed to fetch the correct one each time (a bit hacky, but ok).
+- LLVM-IR code virtual registers are assigned names of the form `%_number`, where `number` is an
+auto-incrementing integer.
