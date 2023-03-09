@@ -21,11 +21,6 @@ compile:
 
 clean:
 	@printf "Cleaning up ..."; \
-      rm -f *.class symbol_table/*.class vtable/*.class visitor/*.class syntaxtree/*.class; \
-      echo " Done!"
-
-clean_all:
-	@printf "Cleaning up ..."; \
 	rm -f *.class symbol_table/*.class vtable/*.class; \
 	rm -f JavaCharStream.java minijava-jtb.jj MiniJavaParser* ParseException.java Token*; \
 	rm -rf visitor syntaxtree; \
