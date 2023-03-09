@@ -1,8 +1,10 @@
 # MiniJava Compiler
 
-This is a MiniJava-to-LLVM-IR compiler project, written in Java with the help of JFlex, JavaCUP and JTB. Details about the
-project can be found [here](https://cgi.di.uoa.gr/~compilers/20_21/project.html#hw2) (sections homework 2 & 3). I thank
-[Stefanos Baziotis](https://github.com/baziotis) for contributing his [MiniJava testsuite](https://github.com/baziotis/minijava-testsuite)!
+This is a [MiniJava](https://cgi.di.uoa.gr/~compilers/20_21/project.html#hw2) compiler that targets
+LLVM, written in Java with the help of JFlex, JavaCUP and JTB.
+
+I would like to thank [Stefanos Baziotis](https://github.com/baziotis) for contributing his [MiniJava
+testsuite](https://github.com/baziotis/minijava-testsuite)!
 
 
 ## Usage
@@ -25,7 +27,7 @@ make clean
 MiniJava is a simple language when it comes to scoping: all declarations precede statements.
 This property prevents declarations from showing up in nested compound statements such as
 if-else, while and block statements. Thus, the symbol table need only keep track of class
-declarations, class-scope declarations (i.e. fields and methods) and method-scope declarations
+declarations, class-scoped declarations (i.e. fields and methods) and method-scoped declarations
 (i.e. parameter and local variables).
 
 ### Compilation Phases
