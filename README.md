@@ -1,7 +1,7 @@
 # MiniJava Compiler
 
 This is a [MiniJava](https://cgi.di.uoa.gr/~compilers/20_21/project.html#hw2) compiler that produces
-LLVM IR, written in Java with the help of JFlex, JavaCUP and JTB.
+LLVM IR code, written in Java using JFlex, JavaCUP and JTB.
 
 I would like to thank [Stefanos Baziotis](https://github.com/baziotis) for contributing his [MiniJava
 testsuite](https://github.com/baziotis/minijava-testsuite)!
